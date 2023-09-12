@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use serde::{Serialize, Deserialize};
-use serde_yaml::{self};
+pub mod load_config_file;
 
 /*
  * -g (generate) - generate config file (copy configs to specified directory)
@@ -8,26 +7,22 @@ use serde_yaml::{self};
  * -l (link) - does the symboly links between the dotfiles directories and the config directories
  * */
 
-#[derive(Debug, Serialize, Deserialize)]
-struct Config {
-    config_paths: Vec<String>
-}
-
 pub fn interprete(tokens: Vec<HashMap<String, String>>) -> () {
     let mut paths: HashMap<String, String> = HashMap::new();
+    let mut creation_flag: &str = "0";
 
     for i in tokens {
         if i["flag"] == "-g" {
-           paths.insert("config".to_string(), i["path"].to_string()); 
-        } else if i["flag"] == "-dd" {
-           paths.insert("dotfiles_dirs".to_string(), i["path"].to_string()); 
+            creation_flag = "-g";
+            paths.insert("config".to_string(), i["path"].to_string()); 
         } else if i["flag"] == "-l" {
-           paths.insert("link_dirs".to_string(), i["path"].to_string()); 
+            creation_flag = "-l";
+            paths.insert("config".to_string(), i["path"].to_string()); 
+        } else if i["flag"] == "-dd" {
+            paths.insert("dotfiles_dirs".to_string(), i["path"].to_string()); 
         }
     }
 
-    println!("{:?}", paths);
-    let file = std::fs::File::open(paths["config"].to_string()).expect("Could not open file.");
-    let paths: Config = serde_yaml::from_reader(file).expect("Could not read values.");
-    println!("{:?}", paths.config_paths);
+    let directory_paths: Vec<String> = load_config_file::load(paths["config"].to_string());
+    println!("{:?}", directory_paths);
 }
