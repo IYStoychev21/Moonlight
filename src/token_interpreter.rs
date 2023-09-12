@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 pub mod load_config_file;
+pub mod config_files_backup;
 
 /*
  * -g (generate) - generate config file (copy configs to specified directory)
@@ -19,10 +20,15 @@ pub fn interprete(tokens: Vec<HashMap<String, String>>) -> () {
             creation_flag = "-l";
             paths.insert("config".to_string(), i["path"].to_string()); 
         } else if i["flag"] == "-dd" {
-            paths.insert("dotfiles_dirs".to_string(), i["path"].to_string()); 
+            paths.insert("dotfiles_dir".to_string(), i["path"].to_string()); 
         }
     }
 
     let directory_paths: Vec<String> = load_config_file::load(paths["config"].to_string());
-    println!("{:?}", directory_paths);
+
+    if creation_flag == "-g" {
+        for i in directory_paths {
+            config_files_backup::backup(i, paths["dotfiles_dir"].to_string()); 
+        }
+    }
 }

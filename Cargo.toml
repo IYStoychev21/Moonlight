@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 serde = {version = "1.0.188", features = ["derive"]}
 serde_yaml = "0.9.25"
+whoami = "1.4.1"
