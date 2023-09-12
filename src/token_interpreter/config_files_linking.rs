@@ -13,5 +13,4 @@ pub fn link(link_to_path: String, link_from_path: String) -> () {
     let dotfile_location: String = format!("{}{}", link_from_path, app_name);
 
     Command::new("sudo").args(["ln", "-s", &dotfile_location, &formated]).status().expect("failed to launch process");
-
 }

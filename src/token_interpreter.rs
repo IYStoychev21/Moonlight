@@ -7,6 +7,7 @@ pub mod config_files_linking;
  * -g (generate) - generate config file (copy configs to specified directory)
  * -dd (dotfiles directory) - directory where the dotfiles are stored 
  * -l (link) - does the symboly links between the dotfiles directories and the config directories
+ * -d (deletes) - deletes the file from the .config directory
  * */
 
 pub fn interprete(tokens: Vec<HashMap<String, String>>) -> () {
