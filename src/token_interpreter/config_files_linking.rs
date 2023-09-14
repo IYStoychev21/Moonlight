@@ -10,7 +10,7 @@ pub fn link(link_to_path: String, link_from_path: String) -> () {
     let mut app_name: String = formated.chars().rev().take_while(|&ch| ch != '/').collect::<String>();
     app_name = app_name.chars().rev().collect::<String>();
 
-    let dotfile_location: String = format!("{}{}", link_from_path, app_name);
+    let dotfile_location: String = format!("{}/{}", link_from_path, app_name);
 
     Command::new("sudo").args(["ln", "-s", &dotfile_location, &formated]).status().expect("failed to launch process");
 }
