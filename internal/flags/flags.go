@@ -11,6 +11,7 @@ import (
 type FlagManager struct {
 	ConfigFile        *types.Flag
 	DotfilesDirectory *types.Flag
+	Mode              *types.Flag
 }
 
 var (
@@ -38,10 +39,17 @@ func (fm *FlagManager) InstantiateFlags() {
 		DefaultValue: "~/dotfiles",
 		Description:  "path to the directory storing your dotfiles",
 	}
+
+	fm.Mode = &types.Flag{
+		Name:         "mode",
+		DefaultValue: "generate",
+		Description:  "generate or link mode. Generate copies the spicefied files in the config file to the specified location and then links them. Link only links them",
+	}
 }
 
 func (fm *FlagManager) ParseFlags() {
 	pflag.StringVar(&fm.ConfigFile.Value, fm.ConfigFile.Name, fm.ConfigFile.DefaultValue, fm.ConfigFile.Description)
 	pflag.StringVar(&fm.DotfilesDirectory.Value, fm.DotfilesDirectory.Name, fm.DotfilesDirectory.DefaultValue, fm.DotfilesDirectory.Description)
+	pflag.StringVar(&fm.Mode.Value, fm.Mode.Name, fm.Mode.DefaultValue, fm.Mode.Description)
 	pflag.Parse()
 }
