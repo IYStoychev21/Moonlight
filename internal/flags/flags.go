@@ -43,7 +43,7 @@ func (fm *FlagManager) InstantiateFlags() {
 	fm.Mode = &types.Flag{
 		Name:         "mode",
 		DefaultValue: "generate",
-		Description:  "generate or link mode. Generate copies the spicefied files in the config file to the specified location and then links them. Link only links them",
+		Description:  "generate or link mode. Generate copies the specified in the config file to your desired directory. Link makes links them",
 	}
 }
 

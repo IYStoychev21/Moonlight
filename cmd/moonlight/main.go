@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"os"
 
 	"github.com/BurntSushi/toml"
+	"github.com/fatih/color"
 
 	"moonlight/internal/actions"
 	"moonlight/internal/flags"
@@ -12,6 +13,11 @@ import (
 )
 
 func main() {
+	if os.Geteuid() == 0 {
+		color.Red("DO NOT RUN AS SUPER USER")
+		return
+	}
+
 	flagManager := flags.GetInstance()
 
 	flagManager.InstantiateFlags()
@@ -30,6 +36,6 @@ func main() {
 	case "generate":
 		actionManager.GenerateFiles()
 	case "link":
-		fmt.Print("Not yet implemented")
+		actionManager.LinkFiles()
 	}
 }

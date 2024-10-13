@@ -2,6 +2,8 @@ package actions
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 	"path/filepath"
 	"sync"
 
@@ -29,7 +31,7 @@ func GetInstance() *ActionManager {
 }
 
 func (am *ActionManager) GenerateFiles() {
-	color.Magenta("Coping file to your desired directory")
+	color.Magenta("Coping files to your desired directory")
 	fmt.Println()
 
 	for i := 0; i < len(am.ConfigFile.ConfigEntreis); i++ {
@@ -44,5 +46,30 @@ func (am *ActionManager) GenerateFiles() {
 		}
 
 		color.Green("Successfully Copied: %s", filepath.Base(currentEntry.From))
+	}
+}
+
+func (am *ActionManager) LinkFiles() {
+	color.Magenta("Linking files")
+	fmt.Println()
+
+	for i := 0; i < len(am.ConfigFile.ConfigEntreis); i++ {
+		currentEntry := am.ConfigFile.ConfigEntreis[i]
+
+		to, _ := utils.ExpandPath(currentEntry.To)
+		from, _ := utils.ExpandPath(currentEntry.From)
+
+		err := os.RemoveAll(to)
+		if err != nil {
+			panic("failed to remove file")
+		}
+
+		cmd := exec.Command("ln", "-s", from, to)
+		_, err = cmd.Output()
+		if err != nil {
+			panic("failed to link file")
+		}
+
+		color.Green("Successfully Linked: %s", filepath.Base(from))
 	}
 }
