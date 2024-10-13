@@ -6,6 +6,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 
+	"moonlight/internal/actions"
 	"moonlight/internal/flags"
 	"moonlight/internal/types"
 )
@@ -22,5 +23,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(config.ConfigEntreis[0].To)
+	actionManager := actions.GetInstance()
+	actionManager.ConfigFile = config
+
+	switch mode := flagManager.Mode.Value; mode {
+	case "generate":
+		actionManager.GenerateFiles()
+	case "link":
+		fmt.Print("Not yet implemented")
+	}
 }
