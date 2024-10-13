@@ -1,0 +1,15 @@
+pkgbase = moonlight-git
+	pkgdesc = Moonlight is a simple dotfiles management tool written in golang
+	pkgver = 0.1.r18.8901687
+	pkgrel = 1
+	url = https://github.com/IYStoychev21/Moonlight
+	arch = x86_64
+	arch = i686
+	license = MIT
+	makedepends = git
+	depends = go
+	provides = moonlight
+	source = git+https://github.com/IYStoychev21/Moonlight
+	sha256sums = SKIP
+
+pkgname = moonlight-git
