@@ -29,21 +29,18 @@ func GetInstance() *FlagManager {
 
 func (fm *FlagManager) InstantiateFlags() {
 	fm.ConfigFile = &types.Flag{
-		Name:         "conf",
-		DefaultValue: "~/dotfiles/config.toml",
-		Description:  "path to the config file",
+		Name:        "conf",
+		Description: "path to the config file",
 	}
 
 	fm.DotfilesDirectory = &types.Flag{
-		Name:         "dir",
-		DefaultValue: "~/dotfiles",
-		Description:  "path to the directory storing your dotfiles",
+		Name:        "dir",
+		Description: "path to the directory storing your dotfiles",
 	}
 
 	fm.Mode = &types.Flag{
-		Name:         "mode",
-		DefaultValue: "generate",
-		Description:  "generate or link mode. Generate copies the specified in the config file to your desired directory. Link makes links them",
+		Name:        "mode",
+		Description: "generate or link mode. Generate copies the specified in the config file to your desired directory. Link makes the links between them",
 	}
 }
 
